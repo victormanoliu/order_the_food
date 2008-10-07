@@ -76,7 +76,7 @@
 			<tr>
 			<td colspan=4>
 				{% for o in order_summary %}
-					{{ o }}
+					{{ o.count }}x{{ o.what }},
 				{% endfor %}
 			</td>
 			</tr>

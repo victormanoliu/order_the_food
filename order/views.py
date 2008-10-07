@@ -23,7 +23,7 @@ def index(request, order_date = None):
 	order_summary = []
 
 	for i in temp_set:
-		order_summary.append(i+'x'+str(temp_list.count(i)))
+		order_summary.append({ 'what': i, 'count': temp_list.count(i) })
 	order_summary.sort()
 
 	order_total = sum(list(o.price for o in order_set))
