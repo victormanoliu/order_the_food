@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+	<head>
+		<title>Comenzi Kana - Comandă noua</title>
+
+		<meta name="description" content="abc">
+		<meta name="keywords" content="def">
+
+    		<link rel="stylesheet" type="text/css" media="screen" href="/media/style.css">
+	</head>
+
+	<body>
+
+        <br><br><br>
+
+        <div id = "form_wrap" align="center">
+		<form action="" id="formular" method="post">
+
+		{{ form.as_p }}
+
+		<p>
+		<input type="submit" value="confirmă comanda" tabindex="3" />
+        <input type="button" value="anulează comanda" tabindex="4" onclick = "window.history.back()" />
+		</p>
+
+		</form>
+        </div>
+
+	</body>
+
+</html>

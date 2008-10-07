@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+
+  	<head>
+
+		<title>Comenzi Kana - Index</title>
+		
+   	 	<meta name="description" content="abc">
+    	<meta name="keywords" content="def">
+		
+	    <link rel="stylesheet" type="text/css" media="screen" href="/media/style.css">
+
+	</head>
+
+	<body>
+
+    <br><br><br>
+
+	<div id = "major">	
+
+        <br>
+
+		<h2>COMENZI KANA - EVIDENȚA</h2>
+
+		<br>
+		<large style="text-align:middle;">Pentru sugestii/probleme: <a href="http://trac.eaudeweb.ro/edw/wiki/OrderTheFood">wiki</a></large><hr><br>
+
+        <table id = "tabel" align = "center">
+
+            <tbody>
+
+            <tr>
+            
+		        <td id = "left_col">
+			
+			    <h3>Istoric comenzi</h3>
+			
+			    <ul class = "list">
+			    {% for d in date_set %}
+				    <li>
+				    <a href="/{{ d }}">{{ d }}</a>
+				    </li>
+			    {% endfor %}
+			    </ul>
+		        </td>
+
+		        <td id = "main">		
+
+		        {% if order_set %}
+		    	<h3>Comenzile pentru ziua de {{ order_date }}:</h3>	
+		    	<table id = "ev" frame="box" cellpadding="5" bgcolor="#69f" align="center">
+		    	<tr>
+		    	<th>Client</th>
+		    	<th>Comandă</th>
+		    	<th>Preț (RON)</th>
+                <th>Anulare</th>
+		    	</tr>
+		    	{% for order in order_set %}
+		    		<tr>
+		    		<td>{{ order.user }}</td>
+		    		<td>{{ order.order }}</td>
+		    		<td>{{ order.price }}</td>
+                    <td>
+                        <form action="/anulare" method="POST">
+                            <input type="hidden" name="id" value="{{ order.id }}">
+                            <input type="submit" value="X">
+                        </form>
+                    </td>
+		    		</tr>
+		    	{% endfor %}
+		    	<tr>
+		    	<th colspan="2">TOTAL</th>
+		    	<td>{{ order_total }}</td>
+		    	</tr>
+		    	</table>
+
+		        {% else %}
+		    	<h3>Nu există comenzi pentru {{ order_date }}.</h3>
+    
+		        {% endif %}
+		
+		        </td>
+
+		        <td id = "tlink" align="center"><a class = "k_link" href="/new">COMANDĂ NOUĂ</a></td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+	</div>
+	
+	</body>		
+		
+</html>
+
