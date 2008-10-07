@@ -54,7 +54,7 @@
 		    	<th>Client</th>
 		    	<th>Comandă</th>
 		    	<th>Preț (RON)</th>
-                <th>Anulare</th>
+                	<th>Anulare</th>
 		    	</tr>
 		    	{% for order in order_set %}
 		    		<tr>
@@ -70,9 +70,16 @@
 		    		</tr>
 		    	{% endfor %}
 		    	<tr>
-		    	<th colspan="2">TOTAL</th>
+		    	<th colspan=2>TOTAL</th>
 		    	<td>{{ order_total }}</td>
 		    	</tr>
+			<tr>
+			<td colspan=4>
+				{% for o in order_summary %}
+					{{ o }}
+				{% endfor %}
+			</td>
+			</tr>
 		    	</table>
 
 		        {% else %}

@@ -10,10 +10,25 @@ def index(request, order_date = None):
 	order_list = Order.objects.all().order_by('-delivery_date')
 	date_set = sorted(list(set(o.delivery_date for o in order_list if o.delivery_date>=datetime.date.today()-datetime.timedelta(days=7))))
 
+	temp_list = []
+
 	order_set = Order.objects.filter(delivery_date=order_date)
+	for o in order_set:
+		x = str(o.order).split('+')
+		for i in x:
+			temp_list.append(i)
+
+	temp_set = set(temp_list)
+	
+	order_summary = []
+
+	for i in temp_set:
+		order_summary.append(i+'x'+str(temp_list.count(i)))
+	order_summary.sort()
+
 	order_total = sum(list(o.price for o in order_set))
 
-	return render_to_response('order/index.html', {'date_set': date_set, 'order_date': order_date, 'order_set': order_set, 'order_total': order_total})
+	return render_to_response('order/index.html', {'date_set': date_set, 'order_date': order_date, 'order_set': order_set, 'order_total': order_total, 'order_summary': order_summary})
 
 def new(request):
     if request.method == 'POST':
