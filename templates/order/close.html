@@ -4,7 +4,7 @@
 
   	<head>
 
-		<title>Comenzi Kana - Confirmă anularea comenzii</title>
+		<title>Comenzi Kana - Confirmă închiderea comenzilor pentru {{ order_date }}</title>
 		
    	 	<meta name="description" content="abc">
     	<meta name="keywords" content="def">
@@ -15,10 +15,13 @@
 
     <body>
         
-        <div id = "confirm_wrap" align="center">
-        <p>Sigur dorești să anulezi comanda ?</p>
+        <div id = "close_wrap" align="center">
+        <p>Sigur dorești să închizi comenzile pentru {{ order_date }} ?</p>
         <form action="" method="POST">
-            <input type="hidden" name="id" value="{{ order.id }}">
+            <input type="hidden" name="order_date" value="{{ order_date }}">
+            Parola:
+            <input type="password" name="parola">
+            <br><br>
             <input type="submit" name="confirm" value="da">
             <input type="button" name="cancel" value="nu" onclick = "window.history.back()">
         </form>

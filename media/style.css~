@@ -128,5 +128,4 @@ ul.list
     {
      color:#eee;
      clear:both;
-     margin-top:20px;
     }

@@ -49,7 +49,7 @@ def cancel(request):
     
     if 'confirm' in request.POST:
         order.delete()
-        return HttpResponseRedirect('/'+str(order.delivery_date))
+        return HttpResponseRedirect('/'+str(order.delivery_date), {'closed': 1})
     else:
         if 'id' not in request.POST:
             return HttpResponse('Bad request: missing required POST field "id"')

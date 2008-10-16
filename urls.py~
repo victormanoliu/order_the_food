@@ -13,4 +13,3 @@ urlpatterns = patterns('',
     (r'^(?P<order_date>.+)/$', 'order_the_food.order.views.index'),
 	(r'^$', 'order_the_food.order.views.index'),
 )
-

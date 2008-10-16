@@ -118,6 +118,8 @@
 
         </div>
 
+        <br><br>
+
         <div id = "close_wrap" align="center">
         <p>Sigur dorești să închizi comenzile pentru {{ order_date }} ?</p>
         <form action="" method="POST">
