@@ -33,14 +33,20 @@ def generate_menu():
 
     return menu
 
+class ClosedOrder(models.Model):
+    delivery_date = models.DateField(verbose_name=u"Data livrarii")
+
+    def __unicode__(self):
+        return unicode(self.delivery_date)
+
 class Order(models.Model):
-	user = models.ForeignKey(User, verbose_name="Utilizator")
-	delivery_date = models.DateField(verbose_name=u"Data livrării")
-	order = models.CharField(max_length=100, verbose_name="Comanda")
-	price = models.FloatField(verbose_name=u"Prețul comenzii (în RON)")
-	
-	def __unicode__(self):
-		return self.order
+    user = models.ForeignKey(User, verbose_name="Utilizator")
+    delivery_date = models.DateField(verbose_name=u"Data livrării")
+    order = models.CharField(max_length=100, verbose_name="Comanda")
+    price = models.FloatField(verbose_name=u"Prețul comenzii (în RON)")
+    
+    def __unicode__(self):
+        return self.order
 
 class OrderContent(object):
     def __init__(self, item1='', item2='', item3=''):
@@ -107,8 +113,12 @@ def date_choices():
     
     for i in range(0,8):
         d = datetime.date.today() + datetime.timedelta(i)
+
+        orders = list(Order.objects.filter(delivery_date=d))
+
+        closed_orders = list(ClosedOrder.objects.all())
         
-        if d.weekday() < len(weekdays):        
+        if (d.weekday() < len(weekdays)) and (d not in closed_orders):        
             l.append( ( d, ("%s (%s)" % (str(d), weekdays[d.weekday()]) ) ) )
     return l
 
@@ -128,7 +138,7 @@ class OrderForm(ModelForm):
 
     class Meta:
         model = Order
-        exclude = ('price')
+        exclude = ('price', 'sent')
 
     def clean_user(self):
         thisone = self.cleaned_data['user']

@@ -14,70 +14,67 @@
 	</head>
 
 
-	<body onload="checkIfClosed({{ closed }})">
-
-    <script type="text/javascript">
-        
-        function checkIfClosed(closed)
-            {
-             if (closed)
-                 {
-                  document.getElementById("delete").style.visibility="hidden";
-                  document.getElementById("links").style.visibility="hidden";
-                 }
-            }
-        
-    </script>
+	<body>
 
     <br><br><br>
 
 	<div id = "major">	
 
-        <br>
+        <div id = "header">
 
+        <br>
 		<h2>COMENZI KANA - EVIDENȚA</h2>
 
-		<br>
-		<large style="text-align:middle;">Pentru sugestii/probleme: <a href="http://trac.eaudeweb.ro/edw/wiki/OrderTheFood">wiki</a></large><hr><br>
+        <div id = "history" align="center">
+            
+            <ul class = "hist">
+            {% for d in date_set %}
+                {% ifnotequal string(d.delivery_date) order_date %}
+                    <li class="inact">
+				    <a href="/{{ d }}"><b>{{ d }}<b></a>
+                    </li>
+                {% else %}
+                    <li class="act">
+                    <a href="/{{ d }}"><b>{{ d }}<b></a>
+                    </li>
+                {% endifnotequal %}
+            {% endfor %}
+            </ul>
+            
+        </div>
+
+        </div>
 
         <div id = "contents">
 
-            <div id = "left_col">
-			
-			    <h3>Istoric comenzi</h3>
-			
-			    <ul class = "list">
-			    {% for d in date_set %}
-				    <li>
-				    <a href="/{{ d }}">{{ d }}</a>
-				    </li>
-			    {% endfor %}
-			    </ul>
+            <div id = "main" align="center">
 
-		    </div>
+            <br><br>		
 
-		    <div id = "main">		
-
-		        {% if order_set %}
+		    {% if order_set %}
 		    	<h3>Comenzile pentru ziua de {{ order_date }}:</h3>	
 		    	<table id = "ev" frame="box" cellpadding="5" bgcolor="#69f" align="center">
 		    	<tr>
 		    	<th>Client</th>
 		    	<th>Comandă</th>
 		    	<th>Preț (RON)</th>
+                {% if not sent %}
                 	<th>Anulare</th>
+                {% endif %}
 		    	</tr>
 		    	{% for order in order_set %}
 		    		<tr>
 		    		<td>{{ order.user }}</td>
 		    		<td>{{ order.order }}</td>
 		    		<td>{{ order.price }}</td>
-                    <td id="delete">
-                        <form action="/anulare" method="POST">
-                            <input type="hidden" name="id" value="{{ order.id }}">
-                            <input type="submit" value="X">
-                        </form>
-                    </td>
+                    {% if not sent %}
+                        <td id="delete">
+                            <form action="/anulare" method="POST">
+                                <input type="hidden" name="id" value="{{ order.id }}">
+                                <input type="submit" value="X">
+                            </form>
+                        </td>
+                    {% endif %}
 		    		</tr>
 		    	{% endfor %}
 		    	<tr>
@@ -91,51 +88,42 @@
 				    {% endfor %}
 			    </td>
 			    </tr>
+                {% if sent %}
+                    <tr><th colspan=3><b>COMENZI ÎNCHISE</b></th></tr><div>
+                {% endif %}
 		    	</table>
 
-		        {% else %}
+		    {% else %}
 		    	<h3>Nu există comenzi pentru {{ order_date }}.</h3>
     
-		        {% endif %}
+		    {% endif %}
 		
             </div>
 		        
-        <br>
+            <br>
 
-        <div id="links">
-            <form action="/new">
-                <input type="submit" value="COMANDĂ NOUĂ">
-            </form>
+            <div id="links" align="center">
+                <form action="/new">
+                    <input type="submit" value="COMANDĂ NOUĂ">
+                </form>
 
-        <br>
-        <br>
+                <br>
+                <br>
 
-            <form action="/inchidere" method="POST">
-                <input type="hidden" name="order_date" value="{{ order_date }}">
-                <input type="submit" value="ÎNCHIDERE COMENZI">
-            </form>
+                {% if not sent %}
+                    <form action="/inchidere" method="POST">
+                        <input type="hidden" name="order_date" value="{{ order_date }}">
+                        <input type="submit" value="ÎNCHIDERE COMENZI">
+                    </form>
+                {% endif %}
+            </div>
+
         </div>
 
-        </div>
+    <h4>Pentru sugestii/probleme: <a href="http://trac.eaudeweb.ro/edw/wiki/OrderTheFood">Wiki</a></h4><br><br>
 
-        <div id = "close_wrap" align="center">
-        <p>Sigur dorești să închizi comenzile pentru {{ order_date }} ?</p>
-        <form action="" method="POST">
-            <input type="hidden" name="order_date" value="{{ order_date }}">
-            Parola:
-            <input type="password" name="parola">
-            <br><br>
-            <input type="submit" name="confirm" value="da">
-            <input type="button" name="cancel" value="nu" onclick = "window.history.back()">
-        </form>
-        </div>
-
-    <div id="savior">
     </div>
-
-	</div>
 	
 	</body>		
 		
 </html>
-

@@ -14,16 +14,19 @@
 	</head>
 
     <body>
-        
-        <div id = "close_wrap" align="center">
+
+        <div class = "confirm_wrap" align="center">
         <p>Sigur dorești să închizi comenzile pentru {{ order_date }} ?</p>
         <form action="" method="POST">
             <input type="hidden" name="order_date" value="{{ order_date }}">
             Parola:
             <input type="password" name="parola">
+            {% if prompt %}
+                <br><br><b>{{ prompt }}</b>
+            {% endif %}
             <br><br>
-            <input type="submit" name="confirm" value="da">
-            <input type="button" name="cancel" value="nu" onclick = "window.history.back()">
+            <input type="submit" value="da" name="confirm">
+            <input type="button" value="nu" onclick="window.history.back()">
         </form>
         </div>
         

@@ -1,4 +1,4 @@
-from order_the_food.order.models import Order
+from order_the_food.order.models import Order, ClosedOrder
 from django.contrib import admin
 
 class OrderAdmin(admin.ModelAdmin):
@@ -13,5 +13,15 @@ class OrderAdmin(admin.ModelAdmin):
 	list_filter = ['delivery_date']
 	date_hierarchy = 'delivery_date'
 
+class OrderAdmin(admin.ModelAdmin):
+
+	fieldsets = [	
+			('Date',	{'fields':['delivery_date']}),
+		]
+
+	#list_display = (str('delivery_date'),)
+	#date_hierarchy = 'delivery_date'
+
 admin.site.register(Order,OrderAdmin)
+admin.site.register(ClosedOrder)
 

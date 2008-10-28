@@ -9,7 +9,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-MY_BASE = '/home/victor/Public/Proiect/'
+MY_BASE = '/home/victor/Proiecte/'
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 DATABASE_NAME = MY_BASE + 'order_the_food/db.sqlite'             # Or path to database file if using sqlite3.
